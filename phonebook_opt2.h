@@ -23,7 +23,11 @@ typedef struct __PHONE_BOOK_ENTRY {
     struct __PHONE_BOOK_ENTRY *pNext;
 } entry;
 
-entry *findName(char lastname[], entry *pHead);
-entry *append(char lastName[], entry *e);
+entry *findName(char lastname[], entry **pHead);
+void append(char lastName[], entry **e);
+//void init_hash_table(entry **e);
+void init_hash_table(entry ***e_head, entry ***e);
+int hashFunc(char lastName[]);
 
 #endif
+
