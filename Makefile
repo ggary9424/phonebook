@@ -18,13 +18,15 @@ phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
 		-DIMPL="\"$@.h\"" -o $@ \
 		-DOPT=1\
-		$(SRCS_common) $@.c -g
+		$(SRCS_common) $@.c \
+		-g
 
 phonebook_opt2: $(SRCS_common) phonebook_opt2.c phonebook_opt2.h
 	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
 		-DIMPL="\"$@.h\"" -o $@ \
 		-DOPT=2\
-		$(SRCS_common) $@.c -g
+		$(SRCS_common) $@.c memorypool.c \
+		-g -lm
 
 run: $(EXEC)
 	echo 3 | sudo tee /proc/sys/vm/drop_caches

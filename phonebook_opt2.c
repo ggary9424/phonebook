@@ -1,8 +1,20 @@
 #include <stdlib.h>
 
 #include "phonebook_opt2.h"
+#include "memorypool.h"
 
-#define BUCKETSIZE 26
+#define BUCKETSIZE 5381
+
+/*
+void init_memory_pool(mem_pool *mp){
+	int i;
+	for(i=0; i<APPEND_DATA_SIZE; i++){
+		(mp->node)[i] = (entry *)malloc(sizeof(entry));
+		(mp->node)[i]->nodeAllocated=0;
+	}
+	mp->count=APPEND_DATA_SIZE;
+}
+*/
 
 entry *findName(char lastName[], entry **pHead)
 {
@@ -16,11 +28,11 @@ entry *findName(char lastName[], entry **pHead)
     return NULL;
 }
 
-void append(char lastName[], entry **e)
+void append(char lastName[], entry **e, int handle)
 {
     int key = hashFunc(lastName);
     entry *tmp = *(e+key);
-    tmp->pNext = (entry *)malloc(sizeof(entry));
+    tmp->pNext = mpAlloc(handle, sizeof(entry));
     strcpy(tmp->lastName, lastName);
     tmp = tmp->pNext;
     tmp->pNext = NULL;
